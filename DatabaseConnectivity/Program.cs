@@ -44,24 +44,44 @@ class Program
                     GetAllRegion();
                     break;
                 case 2:
+                    // menyediakan user input sebagai parameter id untuk method GetRegionById
                     Console.Write("input id yang ingin dicari: ");
                     id = int.Parse(Console.ReadLine());
                     Console.WriteLine("========================");
                     GetRegionById(id);
                     break;
                 case 3:
+                    // menyediakan user input sebagai parameter name untuk method InsertRegion
                     Console.Write("input nama region yang ingin ditambahkan: ");
                     name = Console.ReadLine();
-                    InsertRegion(name);
+
+                    if (name.Length > 0) // input name yang diberikan tidak boleh kosong
+                    {
+                        InsertRegion(name);
+                    } 
+                    else
+                    {
+                        Console.WriteLine("Region name can not be empty!");
+                    }               
                     break;
                 case 4:
-                    Console.Write("input id yang ingin diubah: ");
+                    // menyediakan user input sebagai parameter id & name untuk method UpdateRegion
+                    Console.Write("input id dari data yang ingin diubah: ");
                     id = int.Parse(Console.ReadLine());
                     Console.Write("input nama region yang baru: ");
                     name = Console.ReadLine();
-                    UpdateRegion(id, name);
+
+                    if (name.Length > 0) // input name yang diberikan tidak boleh kosong
+                    {
+                        UpdateRegion(id, name);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Update region name can not be empty!");
+                    }
                     break;
                 case 5:
+                    // menyediakan user input sebagai parameter id untuk method DeleteRegion
                     Console.Write("input id yang ingin dihapus: ");
                     id = int.Parse(Console.ReadLine());
                     DeleteRegion(id);
@@ -173,7 +193,7 @@ class Program
             pName.Value = name;
             pName.SqlDbType = SqlDbType.VarChar;
 
-            //Menambahkan parameter ke command
+            //Menambahkan parameter name ke command
             command.Parameters.Add(pName);
 
             //Menjalankan command
@@ -189,9 +209,7 @@ class Program
                 Console.WriteLine("Data gagal ditambahkan!");
             }
 
-            //Menutup koneksi
             connection.Close();
-
         }
         catch (Exception e)
         {
@@ -212,8 +230,6 @@ class Program
     public static void UpdateRegion(int id, string name)
     {
         connection = new SqlConnection(ConnectionString);
-
-        //Membuka koneksi
         connection.Open();
 
         SqlTransaction transaction = connection.BeginTransaction();
@@ -226,7 +242,7 @@ class Program
             command.CommandText = "UPDATE region SET Name = @name WHERE id = @id";
             command.Transaction = transaction;
 
-            //Membuat parameter
+            //Membuat parameter name & id
             SqlParameter pName = new SqlParameter();           
             pName.ParameterName = "@name";
             pName.Value = name;
@@ -237,7 +253,7 @@ class Program
             pId.Value = id;
             pId.SqlDbType = SqlDbType.Int;
 
-            //Menambahkan parameter ke command
+            //Menambahkan parameter id & name ke command
             command.Parameters.Add(pId);
             command.Parameters.Add(pName);
 
@@ -253,8 +269,6 @@ class Program
             {
                 Console.WriteLine("Data gagal diubah!");
             }
-
-            //Menutup koneksi
             connection.Close();
 
         }
@@ -289,13 +303,13 @@ class Program
             command.CommandText = "DELETE FROM region WHERE id = @id";
             command.Transaction = transaction;
 
-            //Membuat parameter
+            //Membuat parameter id
             SqlParameter pId = new SqlParameter();
             pId.ParameterName = "@id";
             pId.Value = id;
             pId.SqlDbType = SqlDbType.Int;
 
-            //Menambahkan parameter ke command
+            //Menambahkan parameter id ke command
             command.Parameters.Add(pId);
 
             //Menjalankan command
@@ -310,8 +324,6 @@ class Program
             {
                 Console.WriteLine("Data gagal dihapus!");
             }
-
-            //Menutup koneksi
             connection.Close();
 
         }
