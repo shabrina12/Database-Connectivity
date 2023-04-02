@@ -146,7 +146,7 @@ class Program
         //Membuat instance untuk command
         SqlCommand command = new SqlCommand();
         command.Connection = connection;
-        command.CommandText = "SELECT * FROM region WHERE id = @id";
+        command.CommandText = "SELECT * FROM region WHERE id = @id"; // perintah sql untuk mengambil satu data region berdasarkan id nya
         command.Parameters.Add(new SqlParameter("id", id));
 
         //Membuka koneksi
@@ -184,7 +184,7 @@ class Program
             //Membuat instance untuk command
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "INSERT INTO region (name) VALUES (@name)";
+            command.CommandText = "INSERT INTO region (name) VALUES (@name)"; // perintah sql untuk menambahkan data region baru
             command.Transaction = transaction;
 
             //Membuat parameter
@@ -239,19 +239,19 @@ class Program
             //Membuat instance untuk command
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "UPDATE region SET Name = @name WHERE id = @id";
+            command.CommandText = "UPDATE region SET Name = @name WHERE id = @id"; // perintah sql untuk mengubah data name berdasarkan id nya
             command.Transaction = transaction;
 
             //Membuat parameter name & id
             SqlParameter pName = new SqlParameter();           
             pName.ParameterName = "@name";
             pName.Value = name;
-            pName.SqlDbType = SqlDbType.VarChar;
+            pName.SqlDbType = SqlDbType.VarChar; // tipe data name adalah varchar
 
             SqlParameter pId = new SqlParameter();
             pId.ParameterName = "@id";
             pId.Value = id;
-            pId.SqlDbType = SqlDbType.Int;
+            pId.SqlDbType = SqlDbType.Int; // tipe data id adalah int
 
             //Menambahkan parameter id & name ke command
             command.Parameters.Add(pId);
@@ -300,14 +300,14 @@ class Program
             //Membuat instance untuk command
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
-            command.CommandText = "DELETE FROM region WHERE id = @id";
+            command.CommandText = "DELETE FROM region WHERE id = @id"; // perintah sql untuk menghapus data region berdasarkan id
             command.Transaction = transaction;
 
             //Membuat parameter id
             SqlParameter pId = new SqlParameter();
             pId.ParameterName = "@id";
             pId.Value = id;
-            pId.SqlDbType = SqlDbType.Int;
+            pId.SqlDbType = SqlDbType.Int; // tipe data id adalah int
 
             //Menambahkan parameter id ke command
             command.Parameters.Add(pId);
